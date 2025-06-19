@@ -1,2 +1,2 @@
 # GRIT
-This repo include the original GRIT algorithm and the test I run with it 
+This repo includesthe original GRIT algorithm and the test I run with it 
