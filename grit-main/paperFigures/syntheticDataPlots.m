@@ -1,23 +1,24 @@
 %% Plots related to the experiment of Section 3.1
 
-ncs = [1000 2000 3000 5000 7500 10000];
+%ncs = [1000 2000 3000 5000 7500 10000];
+ncs = [10 100 1000];
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_3timepoints/Experiment_1_results_3timepoints.mat')
-Aerror3 = Aerror;
+Aerror3 = Aerror(1:3,:);
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_6timepoints/Experiment_1_results_6timepoints.mat')
-Aerror6 = Aerror;
+Aerror6 = Aerror(1:3,:);
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_12timepoints/Experiment_1_results_12timepoints.mat')
-Aerror12 = Aerror;
+Aerror12 = Aerror(1:3,:);
 
 
 %80th percentiles obtained by taking the averages of highest and second
 %highest values, and lowest and second lowest.
-Range3 = zeros(2,6);
-Range6 = zeros(2,6);
-Range12 = zeros(2,6);
-for jnc = 1:6
+Range3 = zeros(2,length(ncs));
+Range6 = zeros(2,length(ncs));
+Range12 = zeros(2,length(ncs));
+for jnc = 1:length(ncs)
     s = sort(Aerror3(jnc,:),'ascend');
     Range3(:,jnc) = log([(s(1)+s(2))/2; (s(4)+s(5))/2])/log(10);
     
@@ -38,7 +39,7 @@ plot(log(ncs)/log(10),log(sum(Aerror6,2)/5)/log(10),'--o','LineWidth',1.5,'Color
 plot(log(ncs)/log(10),log(sum(Aerror12,2)/5)/log(10),':o','LineWidth',1.5,'Color',cols(3,:))
 
 %Draw sloped gridlines
-for jnc = 1:6
+for jnc = 1:length(ncs)
     plot(log([ncs(jnc) ncs(jnc)])/log(10),[-1 5],'Color',[.83 .83 .83])
 end
 for j2 = 0:8
@@ -53,7 +54,7 @@ end
 plot(log(ncs)/log(10),log(sum(Aerror3,2)/5)/log(10),'-o','LineWidth',1.5,'Color',cols(1,:))
 plot(log(ncs)/log(10),log(sum(Aerror6,2)/5)/log(10),'--o','LineWidth',1.5,'Color',cols(2,:))
 plot(log(ncs)/log(10),log(sum(Aerror12,2)/5)/log(10),':o','LineWidth',1.5,'Color',cols(3,:))
-for jnc = 1:6
+for jnc = 1:length(ncs)
     plot(log(ncs(jnc))/log(10)+eb(1,:)-.01,Range3(1,jnc) + (Range3(2,jnc)-Range3(1,jnc))*eb(2,:),'Color',cols(1,:),'LineWidth',1)
     plot(log(ncs(jnc))/log(10)+eb(1,:),Range6(1,jnc) + (Range6(2,jnc)-Range6(1,jnc))*eb(2,:),'Color',cols(2,:),'LineWidth',1)
     plot(log(ncs(jnc))/log(10)+eb(1,:)+.01,Range12(1,jnc) + (Range12(2,jnc)-Range12(1,jnc))*eb(2,:),'Color',cols(3,:),'LineWidth',1)
@@ -72,7 +73,70 @@ ylabel('Squared model error','FontSize',22)
 legend({'3 timepoints','6 timepoints','12 timepoints'},'Location','Northeast','FontSize',18)
 
 
+%% Plots related to the experiment of Section 3.1 - Modified for [10 100 1000] cells
 
+% Use your modified ncs values
+ncs = [10 100 1000];
+
+load('../SyntheticDataValidation/Results/Experiment_1_results_3timepoints/Experiment_1_results_3timepoints.mat')
+Aerror3 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+
+load('../SyntheticDataValidation/Results/Experiment_1_results_6timepoints/Experiment_1_results_6timepoints.mat')
+Aerror6 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+
+load('../SyntheticDataValidation/Results/Experiment_1_results_12timepoints/Experiment_1_results_12timepoints.mat')
+Aerror12 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+
+% Calculate 80th percentiles
+Range3 = zeros(2,length(ncs));
+Range6 = zeros(2,length(ncs));
+Range12 = zeros(2,length(ncs));
+for jnc = 1:length(ncs)
+    s = sort(Aerror3(jnc,:),'ascend');
+    Range3(:,jnc) = log([(s(1)+s(2))/2; (s(4)+s(5))/2])/log(10);
+    
+    s = sort(Aerror6(jnc,:),'ascend');
+    Range6(:,jnc) = log([(s(1)+s(2))/2; (s(4)+s(5))/2])/log(10);
+    
+    s = sort(Aerror12(jnc,:),'ascend');
+    Range12(:,jnc) = log([(s(1)+s(2))/2; (s(4)+s(5))/2])/log(10);
+end
+
+eb = [-.02 .02 0 0 -.02 .02; 0 0 0 1 1 1];
+cols = [0 0.4470 0.7410; 0.8500 0.3250 0.0980; 0.9290 0.6940 0.1250; 0.4940 0.1840 0.5560; 0.4660 0.6740 0.1880; 0.3010 0.7450 0.9330; 0.6350 0.0780 0.1840; 1 0 1; 0 1 1; .3 .6 .2];
+
+figure; hold on;
+plot(log(ncs)/log(10),log(sum(Aerror3,2)/5)/log(10),'-o','LineWidth',1.5,'Color',cols(1,:))
+plot(log(ncs)/log(10),log(sum(Aerror6,2)/5)/log(10),'--o','LineWidth',1.5,'Color',cols(2,:))
+plot(log(ncs)/log(10),log(sum(Aerror12,2)/5)/log(10),':o','LineWidth',1.5,'Color',cols(3,:))
+
+% Draw vertical gridlines
+for jnc = 1:length(ncs)
+    plot(log([ncs(jnc) ncs(jnc)])/log(10),[log(0.1)/log(10) log(100)/log(10)],'Color',[.83 .83 .83])
+end
+
+% Add error bars
+for jnc = 1:length(ncs)
+    plot(log(ncs(jnc))/log(10)+eb(1,:)-.01,Range3(1,jnc) + (Range3(2,jnc)-Range3(1,jnc))*eb(2,:),'Color',cols(1,:),'LineWidth',1)
+    plot(log(ncs(jnc))/log(10)+eb(1,:),Range6(1,jnc) + (Range6(2,jnc)-Range6(1,jnc))*eb(2,:),'Color',cols(2,:),'LineWidth',1)
+    plot(log(ncs(jnc))/log(10)+eb(1,:)+.01,Range12(1,jnc) + (Range12(2,jnc)-Range12(1,jnc))*eb(2,:),'Color',cols(3,:),'LineWidth',1)
+end
+
+% Adjust axis limits for the smaller ncs range
+axis([log(10)/log(10)-0.1 log(1000)/log(10)+0.1 log(0.1)/log(10) log(1000)/log(10)])
+xticks(log(ncs)/log(10))
+xticklabels(ncs)
+yticks(log([0.01 0.1 1 10 100 1000])/log(10))
+yticklabels([0.01 0.1 1 10 100 1000])
+box on
+
+set(gca,'FontSize',18)
+xlabel('Number of cells per timepoint','FontSize',22)
+ylabel('Squared model error','FontSize',22)
+legend({'3 timepoints','6 timepoints','12 timepoints'},'Location','Northeast','FontSize',18)
+grid on
+
+%%
 
 % Computation time plot for the Supp. Mat.
 
