@@ -1,4 +1,4 @@
-function [GRN,A,transportMap,J,difs,out] = GRITmod(scdata,Tgrid,TFflag,branchId,opts)
+function [GRN,A,transportMap,J,difs,out] = GRITmod_custom(scdata,Tgrid,Atr, btr, TFflag,branchId,opts)
 
 %NOTE: this is a modified version of GRIT that corresponds exactly to the
 %assumptions of the consistency theorem. The modifications include:
@@ -7,7 +7,6 @@ function [GRN,A,transportMap,J,difs,out] = GRITmod(scdata,Tgrid,TFflag,branchId,
 
 out = struct;
 
-[Atr,btr,~,~,~] = getLinSystem(1,false);
 xss = -Atr^-1*btr;
 ep = mean((-2*diag(Atr).*xss).^.5);
 

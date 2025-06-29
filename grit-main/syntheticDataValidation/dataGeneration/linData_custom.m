@@ -1,5 +1,7 @@
 function [scdata,Tgrid,GT] = linData_custom(simOpts, A_custom, b_custom, x0_custom, Tgrid)
-% Modified version of linData that accepts custom A, b, x0 parameters
+% Modified version of linData that accepts custom A, b, x0 parameters 
+% instead of linearizing around equilibrium point of fnet (which comes from
+% getLinSystem.m) 
 % 
 % Inputs:
 %   simOpts - simulation options structure
@@ -33,11 +35,12 @@ end
 
 %Initial distribution covariance
 rng(simOpts.seed)
-P = randn(n_genes, n_genes);
-P = P*P';
-dp = diag(P).^-.5;
-P = (x0.^.5.*((dp.*P).*dp')).*x0'.^.5+.3*eye(n_genes);
-CP = chol(P)';
+% P = randn(n_genes, n_genes);
+% P = P*P';
+% dp = diag(P).^-.5;
+% P = (x0.^.5.*((dp.*P).*dp')).*x0'.^.5+.3*eye(n_genes);
+% CP = chol(P)';
+CP = eye(n_genes);
 
 %Steady-state calculation for noise intensity scaling
 % Calculate steady-state: A*xss + b = 0, so xss = -A\b

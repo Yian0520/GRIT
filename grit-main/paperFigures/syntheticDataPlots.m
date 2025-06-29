@@ -1,16 +1,15 @@
 %% Plots related to the experiment of Section 3.1
 
-%ncs = [1000 2000 3000 5000 7500 10000];
-ncs = [10 100 1000];
+ncs = [1000 2000 3000 5000 7500 10000];
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_3timepoints/Experiment_1_results_3timepoints.mat')
-Aerror3 = Aerror(1:3,:);
+Aerror3 = Aerror(1:6,:);  
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_6timepoints/Experiment_1_results_6timepoints.mat')
-Aerror6 = Aerror(1:3,:);
+Aerror6 = Aerror(1:6,:);  
 
 load('../SyntheticDataValidation/Results/Experiment_1_results_12timepoints/Experiment_1_results_12timepoints.mat')
-Aerror12 = Aerror(1:3,:);
+Aerror12 = Aerror(1:6,:);  
 
 
 %80th percentiles obtained by taking the averages of highest and second
@@ -78,14 +77,15 @@ legend({'3 timepoints','6 timepoints','12 timepoints'},'Location','Northeast','F
 % Use your modified ncs values
 ncs = [10 100 1000];
 
-load('../SyntheticDataValidation/Results/Experiment_1_results_3timepoints/Experiment_1_results_3timepoints.mat')
-Aerror3 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+load('../SyntheticDataValidation/Results/Experiment_1_results_custom_3timepoints/Experiment_1_results_custom_3timepoints.mat')
+Aerror3 = Aerror(1:3,:);
 
-load('../SyntheticDataValidation/Results/Experiment_1_results_6timepoints/Experiment_1_results_6timepoints.mat')
-Aerror6 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+load('../SyntheticDataValidation/Results/Experiment_1_results_custom_6timepoints/Experiment_1_results_custom_6timepoints.mat')
+Aerror6 = Aerror(1:3,:);
 
-load('../SyntheticDataValidation/Results/Experiment_1_results_12timepoints/Experiment_1_results_12timepoints.mat')
-Aerror12 = Aerror(1:3,:);  % First 3 rows correspond to [10 100 1000]
+load('../SyntheticDataValidation/Results/Experiment_1_results_custom_12timepoints/Experiment_1_results_custom_12timepoints.mat')
+Aerror12 = Aerror(1:3,:);
+
 
 % Calculate 80th percentiles
 Range3 = zeros(2,length(ncs));
